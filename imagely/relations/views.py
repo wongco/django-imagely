@@ -4,9 +4,11 @@ from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
+from .secret import CLARIFAI_API_KEY
 
 # View Functions for /image routes
 
+# csrf added to handle POST request not related to FE Form
 @csrf_exempt
 def images(request):
     """
@@ -21,7 +23,6 @@ def images(request):
             'message': 'Post Request Received!',
             'body': body
         })
-        # return JsonResponse({'message': 'POST Request Received!'})
 
     # otherwise return get request JSON
     elif request.method == 'GET':
