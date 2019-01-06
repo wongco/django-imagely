@@ -4,12 +4,11 @@ from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
-from .secret import SECRET_CLARIFAI_API_KEY
 import base64
 import os
 
-# pull key from env or secret.py as fallback
-CLARIFAI_API_KEY = os.environ.get('CLARIFAI_API_KEY', SECRET_CLARIFAI_API_KEY)
+# import key from project settings.py
+from imagely.settings import CLARIFAI_API_KEY
 
 # import python ClarifaiApp
 from clarifai.rest import ClarifaiApp
@@ -25,36 +24,20 @@ def images(request):
     """
     if request.method == 'POST':
 
-        # do stuff to return JSON response to clarifai
-        #body_unicode = request.body.decode('utf-8')
-
         # get encoded base64 pic from post request
         encodedpic = request.POST.get('encodedpic')
 
-
-        #encodedpic = body["encodedpic"]
-
-        # # set clarifai model to use
+        # set clarifai model to use
         model = cf_app.public_models.general_model
 
-        # import pdb
-        # pdb.set_trace()
-
-        # base64_bytes = base64.b64encode(bytes(encodedpic))
-        # # send request to clarifai
-        
         # get dict from clarifai
         raw_response = model.predict_by_base64(bytes(encodedpic, 'UTF-8'))
 
         # get list of dicts representing relations
         response = raw_response['outputs'][0]['data']['concepts']
 
+        # list comp over response and format output
         relations = [{ "association": concept['name'], "value": concept['value'] } for concept in response]
-
-
-        # response = json.loads(raw_response)
-
-        # { relations: [{ association: name, confidence: value }] };
 
         return JsonResponse({
             "relations": relations
