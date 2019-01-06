@@ -19,11 +19,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'z*$j+ipavaal#bqqgepq7_xu!$%gmg#cko8&r+$y7a&_v&l(8p'
+# SECURITY WARNING: keep the secret key used in production secret! - pickup from env
+SECRET_KEY = os.environ.get('SECRET_KEY', 'z*$j+ipavaal#bqqgepq7_xu!$%gmg#cko8&r+$y7a&_v&l(8p')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DEBUG', True)
 
 ALLOWED_HOSTS = []
 
@@ -37,13 +37,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'corsheaders'
+    'corsheaders' # added for cors configuration access
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
+    'corsheaders.middleware.CorsMiddleware', # needs to before django common middleware
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -121,3 +121,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# Allow CORS access on all routes
+CORS_ORIGIN_ALLOW_ALL = True

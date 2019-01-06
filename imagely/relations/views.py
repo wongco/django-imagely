@@ -4,8 +4,12 @@ from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
-from .secret import CLARIFAI_API_KEY
+from .secret import SECRET_CLARIFAI_API_KEY
 import base64
+import os
+
+# pull key from env or secret.py as fallback
+CLARIFAI_API_KEY = os.environ.get('CLARIFAI_API_KEY', SECRET_CLARIFAI_API_KEY)
 
 # import python ClarifaiApp
 from clarifai.rest import ClarifaiApp
