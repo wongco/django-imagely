@@ -25,7 +25,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'z*$j+ipavaal#bqqgepq7_xu!$%gmg#cko8&r
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', True)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['imagemoo2-api.herokuapp.com']
 
 
 # Application definition
