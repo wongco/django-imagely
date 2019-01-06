@@ -31,7 +31,7 @@ DEBUG = os.getenv('DEBUG', False)
 
 CLARIFAI_API_KEY = os.getenv('CLARIFAI_API_KEY')
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['imagemoo2-api.herokuapp.com']
 
 
 # Application definition
